@@ -3,8 +3,34 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
+
+const styles = {
+  global: (props) => ({
+    body: {
+      color: mode("gray.800", "whiteAlpha.900")(props),
+      bg: mode("gray.100", "#101010")(props),
+    },
+  }),
+};
+
+const config = {
+  initialColorMode: "dark",
+  useSystemColorMode: true
+};
+
+const colors = {
+  gray: {
+    light: "#616161",
+    dark: "#1e1e1e"
+  },
+};
+const user_theme = extendTheme({ styles, config, colors })
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <ChakraProvider theme={user_theme}>
+        <ColorModeScript initialColorMode={user_theme.config.initialColorMode} />
+        <App />
+      </ChakraProvider>
   </React.StrictMode>,
 )
